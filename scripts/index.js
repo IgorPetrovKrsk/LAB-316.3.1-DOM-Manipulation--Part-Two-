@@ -61,35 +61,63 @@ subMenuEl.classList.add(`flex-around`);
 let topMenuLinks = topMenuEl.querySelectorAll(`a`);
 
 topMenuEl.onclick = topMenuElClickListener;
+subMenuEl.onclick = subMenuElClickListener;
 
-function buildSubmenu(){
+function buildSubmenu(subLinks) {
     subMenuEl.innerHTML = ``; //clear the submenu
-    
-    
+    let aArray = [];
+    subLinks.forEach((it) => {
+        let newA = document.createElement('a');
+        newA.href = it.href;
+        newA.textContent = it.text;
+        aArray.push(newA);
+    });
+    // just for the sake of experiment lets appent all a at once
+    subMenuEl.append(...aArray);
 }
 
-function topMenuElClickListener(event) {
-    event.preventDefault();
-    if (event.target.nodeName != `A`) {
+function topMenuElClickListener(ev) {
+    ev.preventDefault();
+    if (ev.target.nodeName != `A`) {
         return;
+    }
+    ev.target.classList.toggle(`active`);
+    for (it of topMenuLinks) { //only `a` elements here
+        if (it === ev.target) {
+            continue;
+        }
+        it.classList.remove(`active`);
+    }
+    let subLinks = menuLinks.find(it => it.text == ev.target.textContent).subLinks;
+    if (subLinks && ev.target.classList.contains(`active`)) {
+        subMenuEl.style.top = `100%`;
     } else {
-        //console.log(event.target);
-        event.target.classList.toggle(`active`);
-        for (it of topMenuLinks){ //only `a` elements here
-            if (it === event.target){
-                continue;
-            }
-            it.classList.remove(`active`);
-        }
-        let subLinks = menuLinks.find(it => it.text == event.target.textContent).subLinks;
-        if (subLinks && event.target.classList.contains(`active`)){
-            subMenuEl.style.top = `100%`;
-        }else {
-            subMenuEl.style.top = 0;
-        }
-        if (subLinks){ 
-            buildSubmenu(subLinks);
-        }        
+        subMenuEl.style.top = 0;
+    }
+    if (subLinks) {
+        buildSubmenu(subLinks);
+    }
+    if (ev.target.textContent.toLowerCase() == 'about' && ev.target.classList.contains(`active`)) {
+        mainEl.innerHTML = `<h1>${ev.target.textContent}</h1>`;
+        mainEl.style.textTransform = `uppercase`; //for consistency with the menu
+    }
+    if (ev.target.textContent.toLowerCase() == 'about' && !ev.target.classList.contains(`active`)) {
+        mainEl.innerHTML = `<h1 style="text-decoration: line-through">${ev.target.textContent}</h1>`;
+        
     }
 
+}
+
+function subMenuElClickListener(ev) {
+    ev.preventDefault();
+    if (ev.target.nodeName != `A`) {
+        return;
+    }
+    //console.log (ev.target.textContent); //testing done
+    subMenuEl.style.top = 0;
+    topMenuLinks.forEach(it =>{
+        it.classList.remove(`active`);
+    });
+    mainEl.innerHTML = `<h1>${ev.target.textContent}</h1>`;
+    mainEl.style.textTransform = `uppercase`; //for consistency with the menu
 }
