@@ -25,3 +25,10 @@ menuLinks.forEach((it) => {
     newA.textContent = it.text;
     topMenuEl.append(newA);
 })
+
+//LAB 316.3.1 DOM Manipulation Part Two
+//Part 3
+let subMenuEl = document.getElementById(`sub-menu`);
+subMenuEl.style.height = `100%`;
+subMenuEl.style.backgroundColor = `var(--sub-menu-bg)`;
+subMenuEl.classList.add(`flex-around`);

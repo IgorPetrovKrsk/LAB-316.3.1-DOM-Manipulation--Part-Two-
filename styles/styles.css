@@ -41,7 +41,7 @@
   #top-menu a:hover {
     background-color: var(--sub-menu-bg);
   }
-  
+
   header, #top-menu {
     position: relative;
   }
@@ -49,9 +49,11 @@
     z-index: 20;
   }
   #sub-menu {
+    position: absolute;
+    top: 0;
     width: 100%;
     z-index: 10;
-    transition: top 0.5s ease-out;
+    transition: top 0.5s ease-out;    
   }
   #sub-menu a:hover {
     background-color: var(--top-menu-bg);
