@@ -62,6 +62,12 @@ let topMenuLinks = topMenuEl.querySelectorAll(`a`);
 
 topMenuEl.onclick = topMenuElClickListener;
 
+function buildSubmenu(){
+    subMenuEl.innerHTML = ``; //clear the submenu
+    
+    
+}
+
 function topMenuElClickListener(event) {
     event.preventDefault();
     if (event.target.nodeName != `A`) {
@@ -75,6 +81,15 @@ function topMenuElClickListener(event) {
             }
             it.classList.remove(`active`);
         }
+        let subLinks = menuLinks.find(it => it.text == event.target.textContent).subLinks;
+        if (subLinks && event.target.classList.contains(`active`)){
+            subMenuEl.style.top = `100%`;
+        }else {
+            subMenuEl.style.top = 0;
+        }
+        if (subLinks){ 
+            buildSubmenu(subLinks);
+        }        
     }
 
 }
