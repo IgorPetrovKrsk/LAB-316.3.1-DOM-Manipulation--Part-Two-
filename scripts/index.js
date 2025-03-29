@@ -102,8 +102,7 @@ function topMenuElClickListener(ev) {
         mainEl.style.textTransform = `uppercase`; //for consistency with the menu
     }
     if (ev.target.textContent.toLowerCase() == 'about' && !ev.target.classList.contains(`active`)) {
-        mainEl.innerHTML = `<h1 style="text-decoration: line-through">${ev.target.textContent}</h1>`;
-        
+        mainEl.innerHTML = `<h1 style="text-decoration: line-through">${ev.target.textContent}</h1>`; //just for the fun of it
     }
 
 }
